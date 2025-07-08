@@ -3,6 +3,15 @@ import pandas as pd
 import requests
 from io import BytesIO
 
+
+# Diccionario para traducir meses abreviados a nombres completos en español
+nombres_meses = {
+    1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio",
+    7: "julio", 8: "agosto", 9: "septiembre", 10: "octubre",
+    11: "noviembre", 12: "diciembre"
+}
+
+
 # 1. DESCARGA SERIE CANASTA DE INDEC
 url = "https://www.indec.gob.ar/ftp/cuadros/sociedad/serie_cba_cbt.xls"
 st.write("Descargando archivo desde INDEC...")
@@ -23,7 +32,8 @@ df = df.dropna(subset=["Fecha", "CBT_GBA"])
 df["Fecha"] = pd.to_datetime(df["Fecha"], errors="coerce")
 df = df.dropna(subset=["Fecha"]).sort_values("Fecha")
 ultimo = df.iloc[-1]
-periodo = ultimo["Fecha"].strftime("%B %Y")
+periodo_dt = ultimo["Fecha"]
+periodo = f"{nombres_meses[periodo_dt.month]} de {periodo_dt.year}"
 cbt_gba = ultimo["CBT_GBA"]
 cba_gba = ultimo["CBA_GBA"]
 
