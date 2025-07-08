@@ -94,9 +94,13 @@ percepcion = st.radio("¿Cómo creés que está tu hogar?", [
 hogar = []
 edades = []
 
+sexo_opciones = {"Varón": "1", "Mujer": "2"}
+
+
 st.subheader("Contanos sobre vos")
 edad = st.number_input("¿Qué edad tenés?", min_value=0, max_value=120, step=1)
-sexo = st.selectbox("¿Cuál es tu sexo?", options=[("1", "Varón"), ("2", "Mujer")], index=0)
+sexo_label = st.selectbox("¿Cuál es tu sexo?", options=list(sexo_opciones.keys()))
+sexo = sexo_opciones[sexo_label]
 hogar.append(calcular_adulto_equivalente(edad))
 edades.append(edad)
 
@@ -105,7 +109,8 @@ miembros_adicionales = st.number_input("¿Cuántas personas más viven con vos?"
 for i in range(int(miembros_adicionales)):
     st.subheader(f"Datos de la persona {i + 1}")
     edad_otro = st.number_input(f"Edad:", min_value=0, max_value=120, step=1, key=f"edad_{i}")
-    sexo_otro = st.selectbox("Sexo:", options=[("1", "Varón"), ("2", "Mujer")], key=f"sexo_{i}")
+    sexo_otro_label = st.selectbox("Sexo:", options=list(sexo_opciones.keys()), key=f"sexo_{i}")
+    sexo_otro = sexo_opciones[sexo_otro_label]
     hogar.append(calcular_adulto_equivalente(edad_otro))
     edades.append(edad_otro)
 
