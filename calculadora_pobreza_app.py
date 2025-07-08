@@ -16,8 +16,8 @@ df = pd.read_excel(BytesIO(resp.content), sheet_name=0, skiprows=5)
 df.columns = [str(c).strip() for c in df.columns]
 df = df.rename(columns={
     df.columns[0]: "Fecha",
-    df.columns[1]: "CBT_GBA",
-    df.columns[3]: "CBA_GBA"
+    df.columns[1]: "CBA_GBA",
+    df.columns[3]: "CBT_GBA"
 })
 df = df.dropna(subset=["Fecha", "CBT_GBA"])
 df["Fecha"] = pd.to_datetime(df["Fecha"], errors="coerce")
