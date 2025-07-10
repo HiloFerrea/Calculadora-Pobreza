@@ -59,27 +59,64 @@ etiquetas_region = {
 }
 
 # FUNCIONES
-def calcular_adulto_equivalente(edad):
+def calcular_adulto_equivalente(edad, sexo):
+    """
+    Calcula el valor de adulto equivalente según edad y sexo.
+    Sexo debe ser 'mujer' o 'varón' (no distingue mayúsculas).
+    """
+    sexo = sexo.lower()
+    if sexo not in ['mujer', 'varón']:
+        raise ValueError("Sexo debe ser 'mujer' o 'varón'.")
+
+    if edad < 0:
+        raise ValueError("La edad no puede ser negativa.")
+
     if edad < 1:
-        return 0.3
-    elif edad <= 3:
-        return 0.5
-    elif edad <= 5:
-        return 0.6
-    elif edad <= 7:
-        return 0.7
-    elif edad <= 9:
-        return 0.75
-    elif edad <= 12:
-        return 0.8
-    elif edad <= 14:
-        return 0.9
-    elif edad <= 17:
-        return 1.0
-    elif edad <= 59:
-        return 1.0
-    else:
-        return 0.9
+        return 0.35
+    elif edad == 1:
+        return 0.37
+    elif edad == 2:
+        return 0.46
+    elif edad == 3:
+        return 0.51
+    elif edad == 4:
+        return 0.55
+    elif edad == 5:
+        return 0.60
+    elif edad == 6:
+        return 0.64
+    elif edad == 7:
+        return 0.66
+    elif edad == 8:
+        return 0.68
+    elif edad == 9:
+        return 0.69
+    elif edad == 10:
+        return 0.70 if sexo == 'mujer' else 0.79
+    elif edad == 11:
+        return 0.72 if sexo == 'mujer' else 0.82
+    elif edad == 12:
+        return 0.74 if sexo == 'mujer' else 0.85
+    elif edad == 13:
+        return 0.76 if sexo == 'mujer' else 0.90
+    elif edad == 14:
+        return 0.76 if sexo == 'mujer' else 0.96
+    elif edad == 15:
+        return 0.77 if sexo == 'mujer' else 1.00
+    elif edad == 16:
+        return 0.77 if sexo == 'mujer' else 1.03
+    elif edad == 17:
+        return 0.77 if sexo == 'mujer' else 1.04
+    elif 18 <= edad <= 29:
+        return 0.76 if sexo == 'mujer' else 1.02
+    elif 30 <= edad <= 45:
+        return 0.77 if sexo == 'mujer' else 1.00
+    elif 46 <= edad <= 60:
+        return 0.76 if sexo == 'mujer' else 0.90
+    elif 61 <= edad <= 75:
+        return 0.67 if sexo == 'mujer' else 0.83
+    else:  # edad > 75
+        return 0.63 if sexo == 'mujer' else 0.74
 
 # UI
 st.title("Estimador de Pobreza e Indigencia")
@@ -101,7 +138,7 @@ st.subheader("Contanos sobre vos")
 edad = st.number_input("¿Qué edad tenés?", min_value=0, max_value=120, step=1)
 sexo_label = st.selectbox("¿Cuál es tu sexo?", options=list(sexo_opciones.keys()))
 sexo = sexo_opciones[sexo_label]
-hogar.append(calcular_adulto_equivalente(edad))
+hogar.append(calcular_adulto_equivalente(edad, sexo))
 edades.append(edad)
 
 miembros_adicionales = st.number_input("¿Cuántas personas más viven con vos?", min_value=0, max_value=20, step=1)
@@ -111,7 +148,8 @@ for i in range(int(miembros_adicionales)):
     edad_otro = st.number_input(f"Edad:", min_value=0, max_value=120, step=1, key=f"edad_{i}")
     sexo_otro_label = st.selectbox("Sexo:", options=list(sexo_opciones.keys()), key=f"sexo_{i}")
     sexo_otro = sexo_opciones[sexo_otro_label]
-    hogar.append(calcular_adulto_equivalente(edad_otro))
+    hogar.append(calcular_adulto_equivalente(edad_otro, sexo_otro))
+
     edades.append(edad_otro)
 
 uae_total = sum(hogar)
