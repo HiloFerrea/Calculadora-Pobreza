@@ -59,64 +59,109 @@ etiquetas_region = {
 }
 
 # FUNCIONES
+# FUNCIONES
 def calcular_adulto_equivalente(edad, sexo):
     """
     Calcula el valor de adulto equivalente según edad y sexo.
-    Sexo debe ser 'mujer' o 'varón' (no distingue mayúsculas).
+    Sexo debe ser '1' para varón o '2' para mujer (como lo usa el formulario).
     """
-    sexo = sexo.lower()
-    if sexo not in ['mujer', 'varón']:
-        raise ValueError("Sexo debe ser 'mujer' o 'varón'.")
-
     if edad < 0:
         raise ValueError("La edad no puede ser negativa.")
 
-    if edad < 1:
-        return 0.35
-    elif edad == 1:
-        return 0.37
-    elif edad == 2:
-        return 0.46
-    elif edad == 3:
-        return 0.51
-    elif edad == 4:
-        return 0.55
-    elif edad == 5:
-        return 0.60
-    elif edad == 6:
-        return 0.64
-    elif edad == 7:
-        return 0.66
-    elif edad == 8:
-        return 0.68
-    elif edad == 9:
-        return 0.69
-    elif edad == 10:
-        return 0.70 if sexo == 'mujer' else 0.79
-    elif edad == 11:
-        return 0.72 if sexo == 'mujer' else 0.82
-    elif edad == 12:
-        return 0.74 if sexo == 'mujer' else 0.85
-    elif edad == 13:
-        return 0.76 if sexo == 'mujer' else 0.90
-    elif edad == 14:
-        return 0.76 if sexo == 'mujer' else 0.96
-    elif edad == 15:
-        return 0.77 if sexo == 'mujer' else 1.00
-    elif edad == 16:
-        return 0.77 if sexo == 'mujer' else 1.03
-    elif edad == 17:
-        return 0.77 if sexo == 'mujer' else 1.04
-    elif 18 <= edad <= 29:
-        return 0.76 if sexo == 'mujer' else 1.02
-    elif 30 <= edad <= 45:
-        return 0.77 if sexo == 'mujer' else 1.00
-    elif 46 <= edad <= 60:
-        return 0.76 if sexo == 'mujer' else 0.90
-    elif 61 <= edad <= 75:
-        return 0.67 if sexo == 'mujer' else 0.83
-    else:  # edad > 75
-        return 0.63 if sexo == 'mujer' else 0.74
+    if sexo == '2':  # Mujer
+        if edad < 1:
+            return 0.35
+        elif edad == 1:
+            return 0.37
+        elif edad == 2:
+            return 0.46
+        elif edad == 3:
+            return 0.51
+        elif edad == 4:
+            return 0.55
+        elif edad == 5:
+            return 0.60
+        elif edad == 6:
+            return 0.64
+        elif edad == 7:
+            return 0.66
+        elif edad == 8:
+            return 0.68
+        elif edad == 9:
+            return 0.69
+        elif edad == 10:
+            return 0.70
+        elif edad == 11:
+            return 0.72
+        elif edad == 12:
+            return 0.74
+        elif edad == 13:
+            return 0.76
+        elif edad == 14:
+            return 0.76
+        elif edad in [15, 16, 17]:
+            return 0.77
+        elif 18 <= edad <= 29:
+            return 0.76
+        elif 30 <= edad <= 45:
+            return 0.77
+        elif 46 <= edad <= 60:
+            return 0.76
+        elif 61 <= edad <= 75:
+            return 0.67
+        else:
+            return 0.63
+
+    elif sexo == '1':  # Varón
+        if edad < 1:
+            return 0.35
+        elif edad == 1:
+            return 0.37
+        elif edad == 2:
+            return 0.46
+        elif edad == 3:
+            return 0.51
+        elif edad == 4:
+            return 0.55
+        elif edad == 5:
+            return 0.60
+        elif edad == 6:
+            return 0.64
+        elif edad == 7:
+            return 0.66
+        elif edad == 8:
+            return 0.68
+        elif edad == 9:
+            return 0.69
+        elif edad == 10:
+            return 0.79
+        elif edad == 11:
+            return 0.82
+        elif edad == 12:
+            return 0.85
+        elif edad == 13:
+            return 0.90
+        elif edad == 14:
+            return 0.96
+        elif edad == 15:
+            return 1.00
+        elif edad == 16:
+            return 1.03
+        elif edad == 17:
+            return 1.04
+        elif 18 <= edad <= 29:
+            return 1.02
+        elif 30 <= edad <= 45:
+            return 1.00
+        elif 46 <= edad <= 60:
+            return 0.90
+        elif 61 <= edad <= 75:
+            return 0.83
+        else:
+            return 0.74
+
+    else:
+        raise ValueError("Sexo no reconocido (usar '1' para varón o '2' para mujer').")
 
 # UI
 st.title("Estimador de Pobreza e Indigencia")
