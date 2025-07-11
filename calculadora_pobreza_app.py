@@ -185,7 +185,7 @@ if st.button("Calcular situación del hogar"):
         superavit_lp = ingreso_total - lp
         pct_lp = superavit_lp / lp * 100
         st.write(f"**Excedente porcentual frente a la línea de pobreza:** {pct_lp:.1f}%")
-         st.write(f"**Excedente nominal frente a la línea de pobreza:** ${excedente_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f"**Excedente nominal frente a la línea de pobreza:** ${excedente_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
    
 ###     
     
