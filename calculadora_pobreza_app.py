@@ -221,15 +221,15 @@ st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',')
 st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
 
 
-    if ingreso_total < li:
-        resultado = "indigente"
-        st.error("Tu hogar está por debajo de la línea de indigencia.")
-    elif ingreso_total < lp:
-        resultado = "pobre"
-        st.warning("Tu hogar está por debajo de la línea de pobreza.")
-    else:
-        resultado = "no pobre"
-        st.success("Tu hogar no está por debajo de la línea de pobreza.")
+if ingreso_total < li:
+    resultado = "indigente"
+    st.error("Tu hogar está por debajo de la línea de indigencia.")
+elif ingreso_total < lp:
+    resultado = "pobre"
+    st.warning("Tu hogar está por debajo de la línea de pobreza.")
+else:
+    resultado = "no pobre"
+    st.success("Tu hogar no está por debajo de la línea de pobreza.")
 
     st.write("### Comparación con tu percepción")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
