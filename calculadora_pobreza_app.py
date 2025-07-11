@@ -187,12 +187,7 @@ else:
 
 # Mostrar región seleccionada
 st.markdown(f"**Región asignada:** {etiquetas_region[region]}")
-
-
-#####
-st.subheader("Ubicación del hogar")
-region = st.selectbox("Seleccioná la región", options=list(etiquetas_region.keys()), format_func=lambda x: etiquetas_region[x])
-
+###
 st.markdown(f"**Los valores de pobreza e indigencia corresponden a {periodo}**, según el último dato disponible del INDEC.")
 st.markdown("Por favor, indicá el ingreso mensual total del hogar correspondiente a ese período.")
 ingreso_total = st.number_input("¿Cuál es el ingreso total mensual del hogar (en pesos)?", min_value=0.0, step=100.0)
