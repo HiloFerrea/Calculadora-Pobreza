@@ -175,10 +175,7 @@ if st.button("Calcular situación del hogar"):
         unsafe_allow_html=True
     )
 
-
-
-
-    
+   
     ####
     st.write(f"**Línea de pobreza del hogar:** ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"**Línea de indigencia del hogar:** ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
