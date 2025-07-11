@@ -150,7 +150,6 @@ region = st.selectbox("Seleccioná la región", options=list(etiquetas_region.ke
 st.markdown(f"**Los valores de pobreza e indigencia corresponden a {periodo}**, según el último dato disponible del INDEC.")
 st.markdown("Por favor, indicá el ingreso mensual total del hogar correspondiente a ese período.")
 ingreso_total = st.number_input("¿Cuál es el ingreso total mensual del hogar (en pesos)?", min_value=0.0, step=100.0)
-
 if st.button("Calcular situación del hogar"):
     lp = CBT[region] * uae_total
     li = CBA[region] * uae_total
@@ -169,67 +168,52 @@ if st.button("Calcular situación del hogar"):
 
     if tramo_faltante > 0:
         ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
-        ax.text(left_val + tramo_faltante / 2, 0, f"Falta:\n${tramo_faltante:,.0f}",
+        ax.text(left_val + tramo_faltante / 2, 0, f"Falta:\n${tramo_faltante:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
                 ha='center', va='center', fontsize=10, color='black',
                 bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
-
     elif ingreso_total > lp:
         sobra = ingreso_total - lp
         offset = max(lp * 0.1, 300000)
-        ax.text(ingreso_total + offset, 0, f"Extra:\n${sobra:,.0f}",
+        ax.text(ingreso_total + offset, 0, f"Extra:\n${sobra:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
                 ha='left', va='center', fontsize=10, color='black',
                 bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
     ax.axvline(li, color="black", linestyle=":", linewidth=2)
     ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
-        rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
-
+            rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
     ax.axvline(lp, color="black", linestyle="--", linewidth=2)
-   # Línea de indigencia
-ax.axvline(li, color="black", linestyle=":", linewidth=2)
-ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
-        rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
+            rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
-# Línea de pobreza
-ax.axvline(lp, color="black", linestyle="--", linewidth=2)
-ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
-        rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
+    ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
+            rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
 
-# Línea de ingreso del hogar
-ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
-ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
-        rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
+    ax.set_yticks([])
+    ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
+    ax.set_xlabel("Pesos mensuales")
+    fig.subplots_adjust(top=0.75)
+    fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
+    st.pyplot(fig)
 
+    # Resultado textual
+    st.write("## Resultado")
+    st.write(f"Región: {etiquetas_region.get(region)}")
+    st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
 
-ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
-ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
-        rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
+    if ingreso_total < li:
+        resultado = "indigente"
+        st.error("Tu hogar está por debajo de la línea de indigencia.")
+    elif ingreso_total < lp:
+        resultado = "pobre"
+        st.warning("Tu hogar está por debajo de la línea de pobreza.")
+    else:
+        resultado = "no pobre"
+        st.success("Tu hogar no está por debajo de la línea de pobreza.")
 
-ax.set_yticks([])
-ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
-ax.set_xlabel("Pesos mensuales")
-fig.subplots_adjust(top=0.75)
-fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.85)
-st.pyplot(fig)
-
-# Resultado textual
-st.write("## Resultado")
-st.write(f"Región: {etiquetas_region.get(region)}")
-st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-
-
-if ingreso_total < li:
-    resultado = "indigente"
-    st.error("Tu hogar está por debajo de la línea de indigencia.")
-elif ingreso_total < lp:
-    resultado = "pobre"
-    st.warning("Tu hogar está por debajo de la línea de pobreza.")
-else:
-    resultado = "no pobre"
-    st.success("Tu hogar no está por debajo de la línea de pobreza.")
 
     st.write("### Comparación con tu percepción")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
