@@ -211,45 +211,55 @@ ingreso_total = st.number_input("¿Cuál es el ingreso total mensual del hogar (
 lp = CBT[region] * uae_total
 li = CBA[region] * uae_total
 
-if st.button("Calcular situación del hogar"):
-    total_personas = len(hogar)
-    menores_18 = sum(1 for e in edades if e < 18)
-    mayores_64 = sum(1 for e in edades if e >= 65)
+# Cálculo de tramos y colores
+alcance_indigencia = min(ingreso_total, li)
+alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
+tramo_faltante = max(lp - ingreso_total, 0)
+left_val = min(ingreso_total, lp)
 
-    st.write("## Resumen del hogar")
-    st.write(f"Total de personas: {total_personas}")
-    st.write(f"Adultos equivalentes (estimados): {uae_total:.2f}")
-    st.write(f"Menores de 18 años: {menores_18}")
-    st.write(f"Mayores de 64 años: {mayores_64}")
+color_azul = (65/255, 112/255, 153/255)
+color_rojo = (232/255, 31/255, 118/255)
 
-    # Cálculo de tramos para el gráfico
-    alcance_indigencia = min(ingreso_total, li)
-    alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
-    tramo_faltante = max(lp - ingreso_total, 0)
-    left_val = min(ingreso_total, lp)
+# Crear gráfico
+fig, ax = plt.subplots(figsize=(10, 4))
 
-    color_azul = (65/255, 112/255, 153/255)
-    color_rojo = (232/255, 31/255, 118/255)
+# Dibujar los tramos de la barra
+ax.barh([""], [alcance_indigencia], color=color_rojo)
+ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
+if tramo_faltante > 0:
+    ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
+    ax.text(left_val + tramo_faltante / 2, 0, f"Faltan ${tramo_faltante:,.0f}",
+            ha='center', va='center', fontsize=10, color='black',
+            bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
+elif ingreso_total > lp:
+    sobra = ingreso_total - lp
+    ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}",
+            ha='left', va='center', fontsize=10, color='black',
+            bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
-    # Gráfico de barra única comparativa
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.barh([""], [alcance_indigencia], color=color_rojo, label="Hasta línea de indigencia")
-    ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul, label="Entre indigencia y pobreza")
-    if tramo_faltante > 0:
-        ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray", label="Falta para alcanzar línea de pobreza")
+# Líneas verticales y etiquetas centradas, rotadas 90 grados
+ax.axvline(li, color="black", linestyle=":", linewidth=2)
+ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90,
+        va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
-    ax.axvline(li, color="black", linestyle=":", linewidth=1.5, label=f"Línea de indigencia (${li:,.0f})")
-    ax.axvline(lp, color="black", linestyle="--", linewidth=1.5, label=f"Línea de pobreza (${lp:,.0f})")
-    ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2, label=f"Ingreso del hogar (${ingreso_total:,.0f})")
+ax.axvline(lp, color="black", linestyle="--", linewidth=2)
+ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90,
+        va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
-    ax.set_yticks([])
-    ax.set_xlim(0, max(lp, ingreso_total) * 1.1)
-    ax.set_xlabel("Pesos mensuales")
-    fig.subplots_adjust(top=0.75)
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, 1.3), ncol=2, frameon=False, fontsize=9)
-    fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
+ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
+ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}", rotation=90,
+        va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
 
-    st.pyplot(fig)
+# Estética general
+ax.set_yticks([])
+ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
+ax.set_xlabel("Pesos mensuales")
+fig.subplots_adjust(top=0.75)
+fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
+
+# Mostrar en Streamlit
+st.pyplot(fig)
+
 
     # Resultado textual
     st.write("## Resultado")
