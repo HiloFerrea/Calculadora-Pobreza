@@ -169,9 +169,10 @@ if st.button("Calcular situación del hogar"):
     if tramo_faltante > 0:
         ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
         ax.text(left_val + tramo_faltante / 2, 0, f"Falta para la LP ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=9, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
-    elif ingreso_total > lp:
-        sobra = ingreso_total - lp
-        ax.text(ingreso_total, 0, f"Extra:\n${sobra:,.0f}",
+   elif ingreso_total > lp:
+    sobra = ingreso_total - lp
+    offset = max(lp * 0.1, 300000)  # desplazamiento adaptativo
+    ax.text(ingreso_total + offset, 0, f"Extra:\n${sobra:,.0f}",
             ha='left', va='center', fontsize=10, color='black',
             bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
