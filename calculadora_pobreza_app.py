@@ -303,7 +303,7 @@ if st.button("Calcular situación del hogar"):
 
     st.write("### Percepción vs estimación")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
-        st.info("Coincide: identificaste correctamente la situación de tu hogar.")
+        st.info("Identificaste correctamente la situación de tu hogar.")
     elif "2" in percepcion and resultado == "no pobre":
         st.info("Sí, coincide: estimamos que tu hogar no está en situación de pobreza.")
     elif "3" in percepcion:
