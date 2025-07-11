@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
+import matplotlib.pyplot as plt
 from io import BytesIO
 
 
@@ -58,7 +59,6 @@ etiquetas_region = {
     44: "Patagónica"
 }
 
-# FUNCIONES
 # FUNCIONES
 def calcular_adulto_equivalente(edad, sexo):
     """
@@ -223,6 +223,30 @@ if st.button("Calcular situación del hogar"):
     st.write(f"Menores de 18 años: {menores_18}")
     st.write(f"Mayores de 64 años: {mayores_64}")
 
+# Gráfico comparativo
+fig, ax = plt.subplots()
+etiquetas = ["Ingreso del hogar", "Línea de indigencia", "Línea de pobreza"]
+valores = [ingreso_total, li, lp]
+colores = ["#1f77b4", "#ff7f0e", "#2ca02c"]
+
+barras = ax.bar(etiquetas, valores, color=colores)
+ax.set_ylabel("Pesos")
+ax.set_title("Comparación: Ingreso vs Líneas de Pobreza e Indigencia")
+ax.tick_params(axis='x', labelrotation=10)
+
+# Mostrar valores encima de cada barra
+for barra in barras:
+    altura = barra.get_height()
+    ax.annotate(f"${altura:,.0f}",
+                xy=(barra.get_x() + barra.get_width() / 2, altura),
+                xytext=(0, 5),  # desplazamiento
+                textcoords="offset points",
+                ha='center', va='bottom')
+
+st.pyplot(fig)
+
+    
+
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
     st.write(f"Línea de pobreza: ${lp:,.2f}")
@@ -249,8 +273,13 @@ if st.button("Calcular situación del hogar"):
     else:
         st.info("Hay una diferencia entre tu percepción y la estimación. Puede ser útil analizar por qué.")
 
-    st.write("### Lecturas recomendadas")
-    st.markdown("- [Pobreza 2° Semestre 2024 - DPE PBA](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024.pdf)")
-    st.markdown("- [Anexo metodológico](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024_ANEXO_METODOLOGICO.pdf)")
+   st.write("### Lecturas recomendadas")
+
+    st.markdown("Para comprender en mayor profundidad cómo se define y calcula la pobreza en Argentina, así como los fundamentos metodológicos que sustentan esta herramienta, te recomendamos consultar los siguientes documentos:")
+    st.caption("Los documentos que siguen explican la metodología oficial del INDEC y del sistema estadístico provincial, incluyendo los criterios de cálculo, población de referencia y valores regionales.")
+
+    st.markdown("- [Metodología N°22 - INDEC](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPH_metodologia_22_pobreza.pdf)")
+    st.markdown("- [Informe de pobreza - 2° semestre 2024 (DPE PBA)](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024.pdf)")
+    st.markdown("- [Anexo metodológico de medición de pobreza](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024_ANEXO_METODOLOGICO.pdf)")
 
     st.caption("Herramienta desarrollada por Hilario Ferrea — hiloferrea@gmail.com")
