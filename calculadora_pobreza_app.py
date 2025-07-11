@@ -168,10 +168,10 @@ if st.button("Calcular situación del hogar"):
     ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
     if tramo_faltante > 0:
         ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
-        ax.text(left_val + tramo_faltante / 2, 0, f"Falta para la LP ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
+        ax.text(left_val + tramo_faltante / 2, 0, f"Falta para la LP ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=9, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
     elif ingreso_total > lp:
         sobra = ingreso_total - lp
-        ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}", ha='left', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
+        ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}", ha='left', va='center', fontsize=9, color='black', bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
     ax.axvline(li, color="black", linestyle=":", linewidth=2)
     ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
