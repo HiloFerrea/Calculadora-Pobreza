@@ -166,7 +166,7 @@ if st.button("Calcular situación del hogar"):
 
     st.markdown(
         f"""
-        <div style="border:1px solid #ccc; padding:15px; border-radius:10px; background-color:#f7f7f7; font-size:0.9em;">
+        <div style="border:1px solid #ccc; padding:15px; border-radius:10px; background-color:#f7f7f7; font-size:1.05em;">
             <strong>Línea de pobreza del hogar:</strong> {lp_str}<br>
             <strong>Línea de indigencia del hogar:</strong> {li_str}<br>
             <strong>Ingreso del hogar:</strong> {ingreso_str}
@@ -174,13 +174,8 @@ if st.button("Calcular situación del hogar"):
         """,
         unsafe_allow_html=True
     )
-
-   
-    ####
-    st.write(f"**Línea de pobreza del hogar:** ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"**Línea de indigencia del hogar:** ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"**Ingreso del hogar:** ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-  # Línea de indigencia
+    
+   # Línea de indigencia
     if ingreso_total < li:
         deficit_li = li - ingreso_total
         pct_li = deficit_li / li * 100
