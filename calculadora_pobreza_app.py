@@ -253,4 +253,5 @@ if st.button("Calcular situación del hogar"):
     st.markdown("- [Metodología N°22 - INDEC](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPH_metodologia_22_pobreza.pdf)")
     st.markdown("- [Informe de pobreza - 2° semestre 2024 (DPE PBA)](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024.pdf)")
     st.markdown("- [Anexo metodológico de medición de pobreza](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024_ANEXO_METODOLOGICO.pdf)")
-    st.caption("Herramienta desarrollada por Hilario Ferrea — hiloferrea@gmail.com")
+    
+    st.caption("Herramienta desarrollada por **Hilario Ferrea*** — **Contacto:**hiloferrea@gmail.com")
