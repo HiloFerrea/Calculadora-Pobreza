@@ -193,8 +193,8 @@ if st.button("Calcular situación del hogar"):
         deficit_lp = lp - ingreso_total
         pct_lp = deficit_lp / lp * 100
         
-        st.write(f"**Déficit nominal frente a la línea de pobreza:** ${deficit_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-        st.write(f"**Déficit porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
+        st.write(f">>**Déficit nominal frente a la línea de pobreza:** ${deficit_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f">>**Déficit porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
     else:
         excedente_lp = ingreso_total - lp
         pct_lp = excedente_lp / lp * 100
