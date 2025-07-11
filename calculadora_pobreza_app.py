@@ -180,8 +180,8 @@ if st.button("Calcular situación del hogar"):
     if ingreso_total < li:
         deficit_li = li - ingreso_total
         pct_li = deficit_li / li * 100
-        st.write(f"** Déficit nominal frente a la línea de indigencia:** ${deficit_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-        st.write(f"** Déficit porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
+        st.write(f" **Déficit nominal frente a la línea de indigencia:** ${deficit_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f" **Déficit porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
     else:
         excedente_li = ingreso_total - li
         pct_li = excedente_li / li * 100
