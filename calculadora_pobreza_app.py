@@ -13,7 +13,7 @@ nombres_meses = {
 
 # 1. DESCARGA SERIE CANASTA DE INDEC
 url = "https://www.indec.gob.ar/ftp/cuadros/sociedad/serie_cba_cbt.xls"
-st.write("Descarga de archivo de INDEC completa.")
+st.write("Descarga de archivo de **INDEC** completa.")
 resp = requests.get(url)
 if resp.status_code != 200:
     st.error("Error al descargar el archivo del INDEC.")
