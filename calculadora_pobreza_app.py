@@ -207,6 +207,24 @@ if st.button("Calcular situación del hogar"):
     st.write(f"Línea de indigencia del hogar: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     if ingreso_total < li:
+        brecha_li_pct = (li - ingreso_total) / li * 100
+        brecha_lp_pct = (lp - ingreso_total) / lp * 100
+        st.write(f"Déficit porcentual respecto a la línea de indigencia: {brecha_li_pct:.1f}%")
+        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_lp_pct:.1f}%")
+
+    elif ingreso_total < lp:
+        brecha_li_pct = max((li - ingreso_total) / li * 100, 0)
+        brecha_lp_pct = (lp - ingreso_total) / lp * 100
+        st.write(f"Déficit porcentual respecto a la línea de indigencia: 0,0%")
+        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_lp_pct:.1f}%")
+
+    else:
+        st.write("Déficit porcentual respecto a la línea de indigencia: 0,0%")
+        st.write("Déficit porcentual respecto a la línea de pobreza: 0,0%")
+
+    
+    
+    if ingreso_total < li:
         brecha_pct = (li - ingreso_total) / li * 100
         st.write(f"Déficit porcentual respecto a la línea de indigencia: {brecha_pct:.1f}%")
     elif ingreso_total < lp:
