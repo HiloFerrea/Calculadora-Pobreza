@@ -167,21 +167,21 @@ if st.button("Calcular situación del hogar"):
     if ingreso_total < li:
         deficit_li = li - ingreso_total
         pct_li = deficit_li / li * 100
-        st.write(f"Déficit porcentual frente a la línea de indigencia: {pct_li:.1f}%")
+        st.write(f"**Déficit porcentual frente a la línea de indigencia:** {pct_li:.1f}%")
     else:
         superavit_li = ingreso_total - li
         pct_li = superavit_li / li * 100
-        st.write(f"Superávit porcentual frente a la línea de indigencia: {pct_li:.1f}%")
+        st.write(f"**Excedente porcentual frente a la línea de indigencia:** {pct_li:.1f}%")
 
 # Línea de pobreza
     if ingreso_total < lp:
         deficit_lp = lp - ingreso_total
         pct_lp = deficit_lp / lp * 100
-        st.write(f"Déficit porcentual frente a la línea de pobreza: {pct_lp:.1f}%")
+        st.write(f"**Déficit porcentual frente a la línea de pobreza:** {pct_lp:.1f}%")
     else:
         superavit_lp = ingreso_total - lp
         pct_lp = superavit_lp / lp * 100
-        st.write(f"Superávit porcentual frente a la línea de pobreza: {pct_lp:.1f}%")
+        st.write(f"**Excedente porcentual frente a la línea de pobreza:** {pct_lp:.1f}%")
    
 ###     
     
