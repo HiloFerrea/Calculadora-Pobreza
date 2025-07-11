@@ -163,21 +163,26 @@ if st.button("Calcular situación del hogar"):
     st.write(f"**Línea de pobreza del hogar:** ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"**Línea de indigencia del hogar:** ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"**Ingreso del hogar:** ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    # Línea de indigencia
     if ingreso_total < li:
-        brecha_li_pct = (li - ingreso_total) / li * 100
-        brecha_lp_pct = (lp - ingreso_total) / lp * 100
-        st.write(f"**Déficit porcentual respecto a la línea de indigencia:** {brecha_li_pct:.1f}%")
-        st.write(f"**Déficit porcentual respecto a la línea de pobreza:** {brecha_lp_pct:.1f}%")
-
-    elif ingreso_total < lp:
-        brecha_li_pct = max((li - ingreso_total) / li * 100, 0)
-        brecha_lp_pct = (lp - ingreso_total) / lp * 100
-        st.write(f"**Déficit porcentual respecto a la línea de indigencia:** 0,0%")
-        st.write(f"**Déficit porcentual respecto a la línea de pobreza:** {brecha_lp_pct:.1f}%")
-
+        deficit_li = li - ingreso_total
+        pct_li = deficit_li / li * 100
+        st.write(f"Déficit porcentual frente a la línea de indigencia: {pct_li:.1f}%")
     else:
-        st.write("**Déficit porcentual respecto a la línea de indigencia:** 0,0%")
-        st.write("**Déficit porcentual respecto a la línea de pobreza:** 0,0%")   
+        superavit_li = ingreso_total - li
+        pct_li = superavit_li / li * 100
+        st.write(f"Superávit porcentual frente a la línea de indigencia: {pct_li:.1f}%")
+
+# Línea de pobreza
+    if ingreso_total < lp:
+        deficit_lp = lp - ingreso_total
+        pct_lp = deficit_lp / lp * 100
+        st.write(f"Déficit porcentual frente a la línea de pobreza: {pct_lp:.1f}%")
+    else:
+        superavit_lp = ingreso_total - lp
+        pct_lp = superavit_lp / lp * 100
+        st.write(f"Superávit porcentual frente a la línea de pobreza: {pct_lp:.1f}%")
+   
 ###     
     
     alcance_indigencia = min(ingreso_total, li)
