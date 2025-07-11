@@ -11,7 +11,6 @@ nombres_meses = {
     11: "noviembre", 12: "diciembre"
 }
 
-
 # 1. DESCARGA SERIE CANASTA DE INDEC
 url = "https://www.indec.gob.ar/ftp/cuadros/sociedad/serie_cba_cbt.xls"
 st.write("Descargando archivo desde INDEC...")
@@ -60,105 +59,54 @@ etiquetas_region = {
 
 # FUNCIONES
 def calcular_adulto_equivalente(edad, sexo):
-    """
-    Calcula el valor de adulto equivalente según edad y sexo.
-    Sexo debe ser '1' para varón o '2' para mujer (como lo usa el formulario).
-    """
     if edad < 0:
         raise ValueError("La edad no puede ser negativa.")
-
-    if sexo == '2':  # Mujer
-        if edad < 1:
-            return 0.35
-        elif edad == 1:
-            return 0.37
-        elif edad == 2:
-            return 0.46
-        elif edad == 3:
-            return 0.51
-        elif edad == 4:
-            return 0.55
-        elif edad == 5:
-            return 0.60
-        elif edad == 6:
-            return 0.64
-        elif edad == 7:
-            return 0.66
-        elif edad == 8:
-            return 0.68
-        elif edad == 9:
-            return 0.69
-        elif edad == 10:
-            return 0.70
-        elif edad == 11:
-            return 0.72
-        elif edad == 12:
-            return 0.74
-        elif edad == 13:
-            return 0.76
-        elif edad == 14:
-            return 0.76
-        elif edad in [15, 16, 17]:
-            return 0.77
-        elif 18 <= edad <= 29:
-            return 0.76
-        elif 30 <= edad <= 45:
-            return 0.77
-        elif 46 <= edad <= 60:
-            return 0.76
-        elif 61 <= edad <= 75:
-            return 0.67
-        else:
-            return 0.63
-
-    elif sexo == '1':  # Varón
-        if edad < 1:
-            return 0.35
-        elif edad == 1:
-            return 0.37
-        elif edad == 2:
-            return 0.46
-        elif edad == 3:
-            return 0.51
-        elif edad == 4:
-            return 0.55
-        elif edad == 5:
-            return 0.60
-        elif edad == 6:
-            return 0.64
-        elif edad == 7:
-            return 0.66
-        elif edad == 8:
-            return 0.68
-        elif edad == 9:
-            return 0.69
-        elif edad == 10:
-            return 0.79
-        elif edad == 11:
-            return 0.82
-        elif edad == 12:
-            return 0.85
-        elif edad == 13:
-            return 0.90
-        elif edad == 14:
-            return 0.96
-        elif edad == 15:
-            return 1.00
-        elif edad == 16:
-            return 1.03
-        elif edad == 17:
-            return 1.04
-        elif 18 <= edad <= 29:
-            return 1.02
-        elif 30 <= edad <= 45:
-            return 1.00
-        elif 46 <= edad <= 60:
-            return 0.90
-        elif 61 <= edad <= 75:
-            return 0.83
-        else:
-            return 0.74
-
+    if sexo == '2':
+        if edad < 1: return 0.35
+        elif edad == 1: return 0.37
+        elif edad == 2: return 0.46
+        elif edad == 3: return 0.51
+        elif edad == 4: return 0.55
+        elif edad == 5: return 0.60
+        elif edad == 6: return 0.64
+        elif edad == 7: return 0.66
+        elif edad == 8: return 0.68
+        elif edad == 9: return 0.69
+        elif edad == 10: return 0.70
+        elif edad == 11: return 0.72
+        elif edad == 12: return 0.74
+        elif edad == 13: return 0.76
+        elif edad == 14: return 0.76
+        elif edad in [15, 16, 17]: return 0.77
+        elif 18 <= edad <= 29: return 0.76
+        elif 30 <= edad <= 45: return 0.77
+        elif 46 <= edad <= 60: return 0.76
+        elif 61 <= edad <= 75: return 0.67
+        else: return 0.63
+    elif sexo == '1':
+        if edad < 1: return 0.35
+        elif edad == 1: return 0.37
+        elif edad == 2: return 0.46
+        elif edad == 3: return 0.51
+        elif edad == 4: return 0.55
+        elif edad == 5: return 0.60
+        elif edad == 6: return 0.64
+        elif edad == 7: return 0.66
+        elif edad == 8: return 0.68
+        elif edad == 9: return 0.69
+        elif edad == 10: return 0.79
+        elif edad == 11: return 0.82
+        elif edad == 12: return 0.85
+        elif edad == 13: return 0.90
+        elif edad == 14: return 0.96
+        elif edad == 15: return 1.00
+        elif edad == 16: return 1.03
+        elif edad == 17: return 1.04
+        elif 18 <= edad <= 29: return 1.02
+        elif 30 <= edad <= 45: return 1.00
+        elif 46 <= edad <= 60: return 0.90
+        elif 61 <= edad <= 75: return 0.83
+        else: return 0.74
     else:
         raise ValueError("Sexo no reconocido (usar '1' para varón o '2' para mujer').")
 
@@ -177,7 +125,6 @@ edades = []
 
 sexo_opciones = {"Varón": "1", "Mujer": "2"}
 
-
 st.subheader("Contanos sobre vos")
 edad = st.number_input("¿Qué edad tenés?", min_value=0, max_value=120, step=1)
 sexo_label = st.selectbox("¿Cuál es tu sexo?", options=list(sexo_opciones.keys()))
@@ -193,81 +140,60 @@ for i in range(int(miembros_adicionales)):
     sexo_otro_label = st.selectbox("Sexo:", options=list(sexo_opciones.keys()), key=f"sexo_{i}")
     sexo_otro = sexo_opciones[sexo_otro_label]
     hogar.append(calcular_adulto_equivalente(edad_otro, sexo_otro))
-
     edades.append(edad_otro)
 
 uae_total = sum(hogar)
 
 st.subheader("Ubicación del hogar")
-
 region = st.selectbox("Seleccioná la región", options=list(etiquetas_region.keys()), format_func=lambda x: etiquetas_region[x])
 
 st.markdown(f"**Los valores de pobreza e indigencia corresponden a {periodo}**, según el último dato disponible del INDEC.")
 st.markdown("Por favor, indicá el ingreso mensual total del hogar correspondiente a ese período.")
-
 ingreso_total = st.number_input("¿Cuál es el ingreso total mensual del hogar (en pesos)?", min_value=0.0, step=100.0)
 
+if st.button("Calcular situación del hogar"):
+    lp = CBT[region] * uae_total
+    li = CBA[region] * uae_total
 
-lp = CBT[region] * uae_total
-li = CBA[region] * uae_total
+    alcance_indigencia = min(ingreso_total, li)
+    alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
+    tramo_faltante = max(lp - ingreso_total, 0)
+    left_val = min(ingreso_total, lp)
 
-# Cálculo de tramos y colores
-alcance_indigencia = min(ingreso_total, li)
-alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
-tramo_faltante = max(lp - ingreso_total, 0)
-left_val = min(ingreso_total, lp)
+    color_azul = (65/255, 112/255, 153/255)
+    color_rojo = (232/255, 31/255, 118/255)
 
-color_azul = (65/255, 112/255, 153/255)
-color_rojo = (232/255, 31/255, 118/255)
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.barh([""], [alcance_indigencia], color=color_rojo)
+    ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
+    if tramo_faltante > 0:
+        ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
+        ax.text(left_val + tramo_faltante / 2, 0, f"Faltan ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
+    elif ingreso_total > lp:
+        sobra = ingreso_total - lp
+        ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}", ha='left', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
-# Crear gráfico
-fig, ax = plt.subplots(figsize=(10, 4))
+    ax.axvline(li, color="black", linestyle=":", linewidth=2)
+    ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
-# Dibujar los tramos de la barra
-ax.barh([""], [alcance_indigencia], color=color_rojo)
-ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
-if tramo_faltante > 0:
-    ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
-    ax.text(left_val + tramo_faltante / 2, 0, f"Faltan ${tramo_faltante:,.0f}",
-            ha='center', va='center', fontsize=10, color='black',
-            bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
-elif ingreso_total > lp:
-    sobra = ingreso_total - lp
-    ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}",
-            ha='left', va='center', fontsize=10, color='black',
-            bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
+    ax.axvline(lp, color="black", linestyle="--", linewidth=2)
+    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
-# Líneas verticales y etiquetas centradas, rotadas 90 grados
-ax.axvline(li, color="black", linestyle=":", linewidth=2)
-ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90,
-        va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
+    ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
 
-ax.axvline(lp, color="black", linestyle="--", linewidth=2)
-ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90,
-        va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.set_yticks([])
+    ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
+    ax.set_xlabel("Pesos mensuales")
+    fig.subplots_adjust(top=0.75)
+    fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
+    st.pyplot(fig)
 
-ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
-ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}", rotation=90,
-        va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
-
-# Estética general
-ax.set_yticks([])
-ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
-ax.set_xlabel("Pesos mensuales")
-fig.subplots_adjust(top=0.75)
-fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
-
-# Mostrar en Streamlit
-st.pyplot(fig)
-
-
-    # Resultado textual
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
     st.write(f"Línea de pobreza: ${lp:,.2f}")
     st.write(f"Línea de indigencia: ${li:,.2f}")
     st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}")
-
 
     if ingreso_total < li:
         resultado = "indigente"
