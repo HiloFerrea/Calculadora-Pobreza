@@ -181,11 +181,11 @@ if st.button("Calcular situación del hogar"):
                 bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
     ax.axvline(li, color="black", linestyle=":", linewidth=2)
-    ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90,
+    ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90, .replace(',', '.'),
             va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
     ax.axvline(lp, color="black", linestyle="--", linewidth=2)
-    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90,
+    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90, .replace(',', '.'),
             va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
     ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
@@ -202,9 +202,10 @@ if st.button("Calcular situación del hogar"):
     # Resultado textual
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
-    st.write(f"Línea de pobreza: ${lp:,.2f}")
-    st.write(f"Línea de indigencia: ${li:,.2f}")
-    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}")
+    st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+
 
     if ingreso_total < li:
         resultado = "indigente"
