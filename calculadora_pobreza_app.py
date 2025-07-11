@@ -4,7 +4,6 @@ import requests
 import matplotlib.pyplot as plt
 from io import BytesIO
 
-
 # Diccionario para traducir meses abreviados a nombres completos en español
 nombres_meses = {
     1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio",
