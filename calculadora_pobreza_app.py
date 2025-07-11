@@ -207,9 +207,9 @@ if st.button("Calcular situación del hogar"):
     st.markdown(
         f"""
         <div style="border:1px solid #cccccc; padding:15px; border-radius:10px; background-color:#f9f9f9; font-size:1.0em; margin-bottom:15px;">
-            <div style="margin-bottom:10px;"><strong>Línea de pobreza del hogar:</strong> ${lp_fmt}</div>
-            <div style="margin-bottom:10px;"><strong>Línea de indigencia del hogar:</strong> ${li_fmt}</div>
-            <div><strong>Ingreso del hogar:</strong> ${ingreso_fmt}</div>
+            <div style="margin-bottom:10px;"><strong>Línea de pobreza de tu hogar:</strong> ${lp_fmt}</div>
+            <div style="margin-bottom:10px;"><strong>Línea de indigencia de tu hogar:</strong> ${li_fmt}</div>
+            <div><strong>Ingreso de tu hogar:</strong> ${ingreso_fmt}</div>
         </div>
         """,
         unsafe_allow_html=True
