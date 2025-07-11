@@ -206,12 +206,12 @@ ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
 ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}".replace(',', 'X').replace('.', ',').replace('X', '.'),
         rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
 
-    ax.set_yticks([])
-    ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
-    ax.set_xlabel("Pesos mensuales")
-    fig.subplots_adjust(top=0.75)
-    fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.85)
-    st.pyplot(fig)
+ax.set_yticks([])
+ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
+ax.set_xlabel("Pesos mensuales")
+fig.subplots_adjust(top=0.75)
+fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.85)
+st.pyplot(fig)
 
     # Resultado textual
     st.write("## Resultado")
