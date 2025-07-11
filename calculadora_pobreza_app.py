@@ -213,12 +213,12 @@ fig.subplots_adjust(top=0.75)
 fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.85)
 st.pyplot(fig)
 
-    # Resultado textual
-    st.write("## Resultado")
-    st.write(f"Región: {etiquetas_region.get(region)}")
-    st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+# Resultado textual
+st.write("## Resultado")
+st.write(f"Región: {etiquetas_region.get(region)}")
+st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
 
 
     if ingreso_total < li:
