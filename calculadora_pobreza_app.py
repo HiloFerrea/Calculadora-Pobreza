@@ -168,7 +168,7 @@ if st.button("Calcular situación del hogar"):
     ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
     if tramo_faltante > 0:
         ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
-        ax.text(left_val + tramo_faltante / 2, 0, f"Faltan ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
+        ax.text(left_val + tramo_faltante / 2, 0, f"Falta para la LP ${tramo_faltante:,.0f}", ha='center', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
     elif ingreso_total > lp:
         sobra = ingreso_total - lp
         ax.text(ingreso_total, 0, f"Sobra ${sobra:,.0f}", ha='left', va='center', fontsize=10, color='black', bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
@@ -184,9 +184,9 @@ if st.button("Calcular situación del hogar"):
 
     ax.set_yticks([])
     ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
-    ax.set_xlabel("Pesos mensuales")
+    ax.set_xlabel("Pesos")
     fig.subplots_adjust(top=0.75)
-    fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
+    fig.suptitle("Brecha entre ingreso del hogar y la línea de pobreza", fontsize=13, y=1.05)
     st.pyplot(fig)
 
     st.write("## Resultado")
