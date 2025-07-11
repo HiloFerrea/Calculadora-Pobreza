@@ -145,6 +145,51 @@ for i in range(int(miembros_adicionales)):
 
 uae_total = sum(hogar)
 
+
+st.subheader("Ubicación del hogar")
+
+# Lista de provincias agrupadas por región
+provincias_a_region = {
+    "CABA": 1,  # Gran Buenos Aires
+    "Buenos Aires": None,  # Depende si está en AMBA o no
+    "Catamarca": 40,
+    "Jujuy": 40,
+    "La Rioja": 40,
+    "Salta": 40,
+    "Santiago del Estero": 40,
+    "Tucumán": 40,
+    "Chaco": 41,
+    "Corrientes": 41,
+    "Formosa": 41,
+    "Misiones": 41,
+    "San Juan": 42,
+    "Mendoza": 42,
+    "San Luis": 42,
+    "Córdoba": 43,
+    "Entre Ríos": 43,
+    "La Pampa": 43,
+    "Santa Fe": 43,
+    "Chubut": 44,
+    "Neuquén": 44,
+    "Río Negro": 44,
+    "Santa Cruz": 44,
+    "Tierra del Fuego": 44
+}
+
+provincia = st.selectbox("¿En qué provincia vivís?", options=list(provincias_a_region.keys()))
+
+# En caso de Buenos Aires, preguntar si vive en AMBA
+if provincia == "Buenos Aires":
+    vive_en_amba = st.radio("¿Vivís en el Área Metropolitana de Buenos Aires (AMBA)?", ["Sí", "No"], index=1)
+    region = 1 if vive_en_amba == "Sí" else 43  # 1: GBA, 43: Pampeana
+else:
+    region = provincias_a_region[provincia]
+
+# Mostrar región seleccionada
+st.markdown(f"**Región asignada:** {etiquetas_region[region]}")
+
+
+#####
 st.subheader("Ubicación del hogar")
 region = st.selectbox("Seleccioná la región", options=list(etiquetas_region.keys()), format_func=lambda x: etiquetas_region[x])
 
