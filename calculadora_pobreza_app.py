@@ -256,10 +256,21 @@ if st.button("Calcular situación del hogar"):
     
     st.markdown(
     """
-    <div style="border:1px solid #ccc; padding:10px; border-radius:8px; background-color:#f9f9f9; font-size:0.9em">
-        Herramienta desarrollada por <strong>Hilario Ferrea</strong> — <strong>Contacto:</strong> hiloferrea@gmail.com -hferrea@estadistica.ec.gba.gov.ar 
-    </div>
-    """,
-    unsafe_allow_html=True
+        <div style="
+            border: 1px solid #ccc;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            font-size: 0.9em;
+            text-align: center;
+            max-width: 600px;
+            margin: auto;
+        ">
+            Herramienta desarrollada por <strong>Hilario Ferrea</strong><br>
+            <strong>Contacto:</strong> hiloferrea@gmail.com — hferrea@estadistica.ec.gba.gov.ar
+        </div>
+        """,
+        unsafe_allow_html=True
 )
+
 
