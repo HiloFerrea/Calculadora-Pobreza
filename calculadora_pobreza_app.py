@@ -164,28 +164,28 @@ if st.button("Calcular situación del hogar"):
     st.write(f"**Línea de indigencia del hogar:** ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"**Ingreso del hogar:** ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
   # Línea de indigencia
-if ingreso_total < li:
-    deficit_li = li - ingreso_total
-    pct_li = deficit_li / li * 100
-    st.write(f"**Déficit nominal frente a la línea de indigencia:** ${deficit_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-    st.write(f"**Déficit porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
-else:
-    excedente_li = ingreso_total - li
-    pct_li = excedente_li / li * 100
-    st.write(f"**Excedente nominal frente a la línea de indigencia:** ${excedente_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-    st.write(f"**Excedente porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
+    if ingreso_total < li:
+        deficit_li = li - ingreso_total
+        pct_li = deficit_li / li * 100
+        st.write(f"**Déficit nominal frente a la línea de indigencia:** ${deficit_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f"**Déficit porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
+    else:
+        excedente_li = ingreso_total - li
+        pct_li = excedente_li / li * 100
+        st.write(f"**Excedente nominal frente a la línea de indigencia:** ${excedente_li:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f"**Excedente porcentual frente a la línea de indigencia:** {pct_li:.1f}%".replace(".", ","))
 
 # Línea de pobreza
-if ingreso_total < lp:
-    deficit_lp = lp - ingreso_total
-    pct_lp = deficit_lp / lp * 100
-    st.write(f"**Déficit nominal frente a la línea de pobreza:** ${deficit_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-    st.write(f"**Déficit porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
-else:
-    excedente_lp = ingreso_total - lp
-    pct_lp = excedente_lp / lp * 100
-    st.write(f"**Excedente nominal frente a la línea de pobreza:** ${excedente_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
-    st.write(f"**Excedente porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
+    if ingreso_total < lp:
+        deficit_lp = lp - ingreso_total
+        pct_lp = deficit_lp / lp * 100
+        st.write(f"**Déficit nominal frente a la línea de pobreza:** ${deficit_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f"**Déficit porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
+    else:
+        excedente_lp = ingreso_total - lp
+        pct_lp = excedente_lp / lp * 100
+        st.write(f"**Excedente nominal frente a la línea de pobreza:** ${excedente_lp:,.0f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        st.write(f"**Excedente porcentual frente a la línea de pobreza:** {pct_lp:.1f}%".replace(".", ","))
 
    
 ###     
