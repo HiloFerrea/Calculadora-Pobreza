@@ -57,7 +57,7 @@ etiquetas_region = {
     44: "Patagónica"
 }
 
-# FUNCIONES
+# 4. FUNCIONES
 def calcular_adulto_equivalente(edad, sexo):
     if edad < 0:
         raise ValueError("La edad no puede ser negativa.")
@@ -110,7 +110,8 @@ def calcular_adulto_equivalente(edad, sexo):
     else:
         raise ValueError("Sexo no reconocido (usar '1' para varón o '2' para mujer').")
 
-# UI
+# 5. Entradas
+
 st.title("Estimador de Pobreza e Indigencia")
 st.write("Esta herramienta te ayuda a estimar si tu hogar está en situación de pobreza o indigencia, según quiénes lo integran y el ingreso total mensual que perciben.")
 
@@ -150,6 +151,7 @@ region = st.selectbox("Seleccioná la región", options=list(etiquetas_region.ke
 st.markdown(f"**Los valores de pobreza e indigencia corresponden a {periodo}**, según el último dato disponible del INDEC.")
 st.markdown("Por favor, indicá el ingreso mensual total del hogar correspondiente a ese período.")
 ingreso_total = st.number_input("¿Cuál es el ingreso total mensual del hogar (en pesos)?", min_value=0.0, step=100.0)
+
 if st.button("Calcular situación del hogar"):
     lp = CBT[region] * uae_total
     li = CBA[region] * uae_total
@@ -201,9 +203,16 @@ if st.button("Calcular situación del hogar"):
     # Resultado textual
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
-    st.write(f"Línea de pobreza: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Línea de indigencia: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Línea de pobreza del hogar: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"Línea de indigencia del hogar: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    if ingreso_total < li:
+        brecha_pct = (li - ingreso_total) / li * 100
+        st.write(f"Déficit porcentual respecto a la línea de indigencia: {brecha_pct:.1f}%")
+    elif ingreso_total < lp:
+        brecha_pct = (lp - ingreso_total) / lp * 100
+        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_pct:.1f}%")
+
 
     if ingreso_total < li:
         resultado = "indigente"
