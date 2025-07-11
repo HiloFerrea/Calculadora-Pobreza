@@ -168,7 +168,7 @@ if st.button("Calcular situación del hogar"):
         f"""
         <div style="border:1px solid #cccccc; padding:15px; border-radius:10px; background-color:#f9f9f9; font-size:1.05em;">
             <div style="margin-bottom:10px;"><strong>Línea de pobreza del hogar:</strong> ${lp_fmt}</div>
-            <div style="margin-bottom:10px;"><strong>Línea de indigencia del hogar:</strong> ${li_fmt}</div>
+            <div style="margin-bottom:20px;"><strong>Línea de indigencia del hogar:</strong> ${li_fmt}</div>
             <div><strong>Ingreso del hogar:</strong> ${ingreso_fmt}</div>
         </div>
         """,
