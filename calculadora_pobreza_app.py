@@ -255,7 +255,9 @@ if st.button("Calcular situación del hogar"):
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
     st.write(f"Línea de pobreza: ${lp:,.2f}")
-    st.write(f"Línea
+    st.write(f"Línea de indigencia: ${li:,.2f}")
+    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}")
+
 
     if ingreso_total < li:
         resultado = "indigente"
