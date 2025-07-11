@@ -166,37 +166,40 @@ if st.button("Calcular situación del hogar"):
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.barh([""], [alcance_indigencia], color=color_rojo)
     ax.barh([""], [alcance_pobreza], left=alcance_indigencia, color=color_azul)
+
     if tramo_faltante > 0:
         ax.barh([""], [tramo_faltante], left=left_val, color="#dddddd", hatch="///", edgecolor="gray")
-        ax.text(left_val + tramo_faltante / 2, 0, f"Falta para la LP:\n${tramo_faltante:,.0f}",
-            ha='center', va='center', fontsize=9, color='black',
-            bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
+        ax.text(left_val + tramo_faltante / 2, 0, f"Falta:\n${tramo_faltante:,.0f}",
+                ha='center', va='center', fontsize=10, color='black',
+                bbox=dict(facecolor='white', edgecolor='gray', boxstyle='round,pad=0.3'))
 
-elif ingreso_total > lp:
-    sobra = ingreso_total - lp
-    offset = max(lp * 0.1, 300000)  # desplazamiento adaptativo
-    ax.text(ingreso_total + offset, 0, f"Extra:\n${sobra:,.0f}",
-            ha='left', va='center', fontsize=10, color='black',
-            bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
-
-
+    elif ingreso_total > lp:
+        sobra = ingreso_total - lp
+        offset = max(lp * 0.1, 300000)
+        ax.text(ingreso_total + offset, 0, f"Extra:\n${sobra:,.0f}",
+                ha='left', va='center', fontsize=10, color='black',
+                bbox=dict(facecolor='white', edgecolor=color_azul, boxstyle='round,pad=0.3'))
 
     ax.axvline(li, color="black", linestyle=":", linewidth=2)
-    ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.text(li, 0, f"Línea de indigencia\n${li:,.0f}", rotation=90,
+            va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
     ax.axvline(lp, color="black", linestyle="--", linewidth=2)
-    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
+    ax.text(lp, 0, f"Línea de pobreza\n${lp:,.0f}", rotation=90,
+            va='center', ha='center', fontsize=9, color="black", backgroundcolor="white")
 
     ax.axvline(ingreso_total, color=color_azul, linestyle="-", linewidth=2)
-    ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}", rotation=90, va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
+    ax.text(ingreso_total, 0, f"Ingreso del hogar\n${ingreso_total:,.0f}", rotation=90,
+            va='center', ha='center', fontsize=9, color=color_azul, backgroundcolor="white")
 
     ax.set_yticks([])
     ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
-    ax.set_xlabel("Pesos")
+    ax.set_xlabel("Pesos mensuales")
     fig.subplots_adjust(top=0.75)
-    fig.suptitle("Brecha entre ingreso del hogar y la línea de pobreza", fontsize=13, y=1.05)
+    fig.suptitle("Comparación entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.05)
     st.pyplot(fig)
 
+    # Resultado textual
     st.write("## Resultado")
     st.write(f"Región: {etiquetas_region.get(region)}")
     st.write(f"Línea de pobreza: ${lp:,.2f}")
