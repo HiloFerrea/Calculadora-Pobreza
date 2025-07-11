@@ -196,7 +196,7 @@ if st.button("Calcular situación del hogar"):
     ax.set_xlim(0, max(lp, ingreso_total) * 1.25)
     ax.set_xlabel("Pesos mensuales")
     fig.subplots_adjust(top=0.75)
-    fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.5)
+    fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=1.0)
     st.pyplot(fig)
 
     # Resultado textual
