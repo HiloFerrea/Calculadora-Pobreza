@@ -178,12 +178,7 @@ if st.button("Calcular situación del hogar"):
     else:
         st.write("Déficit porcentual respecto a la línea de indigencia: 0,0%")
         st.write("Déficit porcentual respecto a la línea de pobreza: 0,0%")   
-###
-    
-    
-    
-    
-    
+###     
     
     alcance_indigencia = min(ingreso_total, li)
     alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
@@ -229,28 +224,8 @@ if st.button("Calcular situación del hogar"):
     fig.suptitle("Brechas entre ingreso del hogar y líneas de pobreza", fontsize=13, y=0.85)
     st.pyplot(fig)
 
-    # Resultado textual
-    st.write("## Resultado")
-    st.write(f"Región: {etiquetas_region.get(region)}")
-    st.write(f"Línea de pobreza del hogar: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Línea de indigencia del hogar: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    if ingreso_total < li:
-        brecha_li_pct = (li - ingreso_total) / li * 100
-        brecha_lp_pct = (lp - ingreso_total) / lp * 100
-        st.write(f"Déficit porcentual respecto a la línea de indigencia: {brecha_li_pct:.1f}%")
-        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_lp_pct:.1f}%")
-
-    elif ingreso_total < lp:
-        brecha_li_pct = max((li - ingreso_total) / li * 100, 0)
-        brecha_lp_pct = (lp - ingreso_total) / lp * 100
-        st.write(f"Déficit porcentual respecto a la línea de indigencia: 0,0%")
-        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_lp_pct:.1f}%")
-
-    else:
-        st.write("Déficit porcentual respecto a la línea de indigencia: 0,0%")
-        st.write("Déficit porcentual respecto a la línea de pobreza: 0,0%")   
-
+    ###
+    
     if ingreso_total < li:
         resultado = "indigente"
         st.error("Tu hogar está por debajo de la línea de indigencia.")
