@@ -223,26 +223,26 @@ if st.button("Calcular situación del hogar"):
     st.write(f"Mayores de 64 años: {mayores_64}")
 
 # Gráfico comparativo
-fig, ax = plt.subplots()
-etiquetas = ["Ingreso del hogar", "Línea de indigencia", "Línea de pobreza"]
-valores = [ingreso_total, li, lp]
-colores = ["#1f77b4", "#ff7f0e", "#2ca02c"]
+    fig, ax = plt.subplots()
+    etiquetas = ["Ingreso del hogar", "Línea de indigencia", "Línea de pobreza"]
+    valores = [ingreso_total, li, lp]
+    colores = ["#1f77b4", "#ff7f0e", "#2ca02c"]
 
-barras = ax.bar(etiquetas, valores, color=colores)
-ax.set_ylabel("Pesos")
-ax.set_title("Comparación: Ingreso vs Líneas de Pobreza e Indigencia")
-ax.tick_params(axis='x', labelrotation=10)
+    barras = ax.bar(etiquetas, valores, color=colores)
+    ax.set_ylabel("Pesos")
+    ax.set_title("Comparación: Ingreso vs Líneas de Pobreza e Indigencia")
+    ax.tick_params(axis='x', labelrotation=10)
 
 # Mostrar valores encima de cada barra
-for barra in barras:
-    altura = barra.get_height()
-    ax.annotate(f"${altura:,.0f}",
+    for barra in barras:
+        altura = barra.get_height()
+        ax.annotate(f"${altura:,.0f}",
                 xy=(barra.get_x() + barra.get_width() / 2, altura),
                 xytext=(0, 5),  # desplazamiento
                 textcoords="offset points",
                 ha='center', va='bottom')
 
-st.pyplot(fig)
+    st.pyplot(fig)
 
     
 
