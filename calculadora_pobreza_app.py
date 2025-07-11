@@ -159,15 +159,15 @@ if st.button("Calcular situación del hogar"):
     ####
     # Resultado textual
     st.write("## Resultado")
-    st.write(f"Región: {etiquetas_region.get(region)}")
-    st.write(f"Línea de pobreza del hogar: ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Línea de indigencia del hogar: ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
-    st.write(f"Ingreso del hogar: ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"**Región:** {etiquetas_region.get(region)}")
+    st.write(f"**Línea de pobreza del hogar:** ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"**Línea de indigencia del hogar:** ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
+    st.write(f"**Ingreso del hogar:** ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.'))
     if ingreso_total < li:
         brecha_li_pct = (li - ingreso_total) / li * 100
         brecha_lp_pct = (lp - ingreso_total) / lp * 100
-        st.write(f"Déficit porcentual respecto a la línea de indigencia: {brecha_li_pct:.1f}%")
-        st.write(f"Déficit porcentual respecto a la línea de pobreza: {brecha_lp_pct:.1f}%")
+        st.write(f"**Déficit porcentual respecto a la línea de indigencia:** {brecha_li_pct:.1f}%")
+        st.write(f"**Déficit porcentual respecto a la línea de pobreza:** {brecha_lp_pct:.1f}%")
 
     elif ingreso_total < lp:
         brecha_li_pct = max((li - ingreso_total) / li * 100, 0)
@@ -237,17 +237,17 @@ if st.button("Calcular situación del hogar"):
         st.success("Tu hogar no está por debajo de la línea de pobreza.")
 
 
-    st.write("### Comparación con tu percepción")
+    st.write("### Percepción vs estimación")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
         st.info("Sí, coincide: reconociste una situación de vulnerabilidad.")
     elif "2" in percepcion and resultado == "no pobre":
         st.info("Sí, coincide: estimamos que tu hogar no está en situación de pobreza.")
     elif "3" in percepcion:
-        st.info("Ahora tenés una estimación técnica que te puede ayudar a reflexionar.")
+        st.info("Este resultado puede ayudarte a poner en perspectiva tu percepción.")
     else:
         st.info("Hay una diferencia entre tu percepción y la estimación. Puede ser útil analizar por qué.")
 
-    st.write("### Lecturas recomendadas")
+    st.write("### Materiales de referencia")
     st.markdown("Para comprender en mayor profundidad cómo se define y calcula la pobreza en Argentina, así como los fundamentos metodológicos que sustentan esta herramienta, te recomendamos consultar los siguientes documentos:")
     st.caption("Los documentos que siguen explican la metodología oficial del INDEC y del sistema estadístico provincial, incluyendo los criterios de cálculo, población de referencia y valores regionales.")
     st.markdown("- [Metodología N°22 - INDEC](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPH_metodologia_22_pobreza.pdf)")
