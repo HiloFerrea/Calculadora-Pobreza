@@ -160,20 +160,21 @@ if st.button("Calcular situación del hogar"):
     # Resultado textual
     st.write("## Resultado")
     st.write(f"**Región:** {etiquetas_region.get(region)}")
-    lp_str = f"${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-    li_str = f"${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-    ingreso_str = f"${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+    lp_fmt = f"{lp:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    li_fmt = f"{li:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    ingreso_fmt = f"{ingreso_total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     st.markdown(
-       f"""
+        f"""
         <div style="border:1px solid #cccccc; padding:15px; border-radius:10px; background-color:#f9f9f9; font-size:1.05em;">
-            <div style="margin-bottom:8px;"><strong>Línea de pobreza del hogar:</strong> ${lp:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')</div>
-            <div style="margin-bottom:8px;"><strong>Línea de indigencia del hogar:</strong> ${li:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')</div>
-            <div><strong>Ingreso del hogar:</strong> ${ingreso_total:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')</div>
+            <div style="margin-bottom:10px;"><strong>Línea de pobreza del hogar:</strong> ${lp_fmt}</div>
+            <div style="margin-bottom:10px;"><strong>Línea de indigencia del hogar:</strong> ${li_fmt}</div>
+            <div><strong>Ingreso del hogar:</strong> ${ingreso_fmt}</div>
         </div>
         """,
         unsafe_allow_html=True
     )
+
 
    # Línea de indigencia
     if ingreso_total < li:
