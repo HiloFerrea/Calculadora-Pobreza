@@ -1,11 +1,11 @@
 
-# ✅ Guía de trabajo colaborativo – Calculadora de Pobreza
+# Guía de trabajo colaborativo – Calculadora de Pobreza
 
 Esta guía documenta el flujo de trabajo estándar para mantener y actualizar este proyecto de Streamlit desde múltiples computadoras (por ejemplo: PC personal y PC del trabajo), asegurando sincronización y orden en GitHub y Streamlit Cloud.
 
 ---
 
-## 1. 🔧 Requisitos técnicos (solo la primera vez en una PC)
+## 1. Requisitos técnicos (solo la primera vez en una PC)
 
 - Python 3.12 o superior
 - Git
@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ---
 
-## 2. 🔁 Antes de empezar a trabajar (siempre)
+## 2. Antes de empezar a trabajar (siempre)
 
 > Estos pasos aseguran que estés trabajando con la última versión del proyecto.
 
@@ -39,7 +39,7 @@ git pull origin main
 
 ---
 
-## 3. 🧑‍💻 Durante el trabajo
+## 3. Durante el trabajo
 
 - Editá los archivos que necesites (`calculadora_pobreza_app.py`, `requirements.txt`, etc.)
 - Podés ejecutar la app localmente con:
@@ -52,7 +52,7 @@ streamlit run calculadora_pobreza_app.py
 
 ---
 
-## 4. 📤 Guardar y subir los cambios a GitHub
+## 4. Guardar y subir los cambios a GitHub
 
 > Hacé esto siempre que termines de trabajar para mantener el repositorio actualizado.
 
@@ -83,7 +83,7 @@ git config --global user.email "hiloferrea@gmail.com"
 
 ---
 
-## 5. 🌐 Ver los cambios en Streamlit Cloud
+## 5. Ver los cambios en Streamlit Cloud
 
 > Streamlit Cloud detecta automáticamente los cambios y actualiza la app.
 
@@ -97,7 +97,7 @@ https://hiloferrea-calculadora-pobreza.streamlit.app
 
 ---
 
-## 6. 📦 Si agregás nuevas bibliotecas
+## 6. Si agregás nuevas bibliotecas
 
 > Para que funcionen en la otra PC o en Streamlit Cloud:
 
@@ -117,7 +117,7 @@ pip freeze > requirements.txt
 
 ---
 
-## 7. 🛠️ Errores comunes
+## 7. Errores comunes
 
 - **ModuleNotFoundError** → Instalá la dependencia faltante con `pip install ...`
 - **File does not exist** → Asegurate de estar en la carpeta correcta con `cd`
@@ -125,7 +125,7 @@ pip freeze > requirements.txt
 
 ---
 
-## 8. 🧼 Buenas prácticas
+## 8. Buenas prácticas
 
 - Siempre hacé `git pull` antes de empezar
 - Nunca trabajes en dos computadoras a la vez sin sincronizar
@@ -134,7 +134,7 @@ pip freeze > requirements.txt
 
 ---
 
-## 9. 📁 Estructura esperada del proyecto
+## 9. Estructura esperada del proyecto
 
 ```
 Calculadora-Pobreza/
