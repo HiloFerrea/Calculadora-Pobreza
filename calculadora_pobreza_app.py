@@ -112,8 +112,8 @@ def calcular_adulto_equivalente(edad, sexo):
 
 # 5. Entradas
 
-st.title("Estimador de **Pobreza** e Indigencia")
-st.write("Esta herramienta te ayuda a estimar si tu hogar está en situación de pobreza o indigencia, según quiénes lo integran y el ingreso total mensual que perciben.")
+st.title("Estimador de Pobreza e Indigencia")
+st.write("Esta herramienta te ayuda a ***estimar*** si tu hogar está en situación de pobreza o indigencia, según quiénes lo integran y el ingreso total mensual que perciben.")
 
 percepcion = st.radio("¿Cómo creés que está tu hogar?", [
     "1 - Creo que estamos por debajo de la línea de pobreza",
