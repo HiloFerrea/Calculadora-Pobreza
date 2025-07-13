@@ -312,11 +312,11 @@ if st.button("Calcular situación del hogar"):
         
         st.write("### Segmentación del hogar no pobre:")
         if fragil:
-            st.info("⚠️ Tu hogar está apenas por encima de la línea de pobreza, en situación **frágil**.")
+            st.warning("Tu hogar está apenas por encima de la línea de pobreza, en situación **frágil**.")
         elif clase_media:
-            st.success("✅ Tu hogar pertenece a la **clase media** (entre 1.25 y 4 veces la línea de pobreza).")
+            st.warning("Tu hogar pertenece a la **clase media** (entre 1.25 y 4 veces la línea de pobreza).")
         elif acomodado:
-            st.success("💰 Tu hogar está en el estrato de **ingresos acomodados** (más de 4 veces la línea de pobreza).")
+            st.warning("Tu hogar está en el estrato de **ingresos acomodados** (más de 4 veces la línea de pobreza).")
     
     st.write("### Percepción vs estimación")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
