@@ -196,6 +196,14 @@ if st.button("Calcular situación del hogar"):
     lp = CBT[region] * uae_total
     li = CBA[region] * uae_total
 
+# Segmentación adicional dentro de los no pobres
+    fragil_monto = lp * 1.25
+    medio_monto = lp * 4
+
+    fragil = ingreso_total > lp and ingreso_total <= fragil_monto
+    clase_media = ingreso_total > fragil_monto and ingreso_total <= medio_monto
+    acomodado = ingreso_total > medio_monto  
+
     ####
     # Resultado textual
     st.write("## Resultado")
@@ -300,7 +308,16 @@ if st.button("Calcular situación del hogar"):
         resultado = "no pobre"
         st.success("Tu hogar no está por debajo de la línea de pobreza.")
 
-
+# Segmentación adicional para hogares no pobres
+        
+        st.write("### Segmentación del hogar no pobre:")
+        if fragil:
+            st.info("⚠️ Tu hogar está apenas por encima de la línea de pobreza, en situación **frágil**.")
+        elif clase_media:
+            st.success("✅ Tu hogar pertenece a la **clase media** (entre 1.25 y 4 veces la línea de pobreza).")
+        elif acomodado:
+            st.success("💰 Tu hogar está en el estrato de **ingresos acomodados** (más de 4 veces la línea de pobreza).")
+    
     st.write("### Percepción vs estimación")
     if "1" in percepcion and resultado in ["pobre", "indigente"]:
         st.info("Identificaste correctamente la situación de tu hogar.")
