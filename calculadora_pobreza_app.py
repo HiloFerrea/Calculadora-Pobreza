@@ -308,9 +308,9 @@ if st.button("Calcular situación del hogar"):
         resultado = "no pobre"
         st.success("Tu hogar está por encima de la línea de pobreza.")
 
-# ¿Qué tan lejos está tu hogar de la pobreza?
+# Segmentación del hogar no pobre:
         
-        st.write("### Segmentación del hogar no pobre:")
+        st.write("### ¿Qué tan lejos está tu hogar de la pobreza?")
         if fragil:
             st.warning("Tu hogar está apenas por encima de la línea de pobreza, en situación **frágil**.")
         elif clase_media:
