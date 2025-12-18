@@ -1,3 +1,15 @@
+"""
+Estimador de Pobreza e Indigencia
+
+Autor: Hilario Ferrea
+Afiliación: Dirección Provincial de Estadística – Ministerio de Economía PBA
+Contacto: hferrea@estadistica.ec.gba.gov.ar | hiloferrea@gmail.com
+
+Este código constituye un desarrollo técnico de carácter exploratorio.
+No representa una publicación oficial del INDEC ni de la DPE.
+"""
+
+
 import streamlit as st
 import pandas as pd
 import requests
