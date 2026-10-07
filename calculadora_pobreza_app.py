@@ -344,8 +344,8 @@ if st.button("Calcular situación del hogar"):
     st.markdown("Para comprender en mayor profundidad cómo se define y calcula la pobreza en Argentina, así como los fundamentos metodológicos que sustentan esta herramienta, te recomendamos consultar los siguientes documentos:")
     st.caption("Los documentos que siguen explican la metodología oficial del INDEC y del sistema estadístico provincial, incluyendo los criterios de cálculo, población de referencia y valores regionales.")
     st.markdown("- [Metodología N°22 - INDEC](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPH_metodologia_22_pobreza.pdf)")
-    st.markdown("- [Informe de pobreza - 2° semestre 2024 (DPE PBA)](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024.pdf)")
-    st.markdown("- [Anexo metodológico de medición de pobreza](https://www.estadistica.ec.gba.gov.ar/dpe/images/POBREZA_2S2024_ANEXO_METODOLOGICO.pdf)")
+    st.markdown("- [Informe de pobreza - (DPE PBA)](https://track-web-dpe.estadistica.ec.gba.gov.ar/uploads/Condiciones_de_Vida_Total_6_aglomerados_PBA_2do_Semestre_2025_dda6b81013.pdf)")
+    st.markdown("- [Anexo metodológico de medición de pobreza](https://track-web-dpe.estadistica.ec.gba.gov.ar/uploads/Pobreza_Anexo_Metodologico_cc4f3c26bc.pdf)")
     
     st.markdown(
     """
