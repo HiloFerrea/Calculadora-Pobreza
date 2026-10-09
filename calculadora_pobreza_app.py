@@ -51,11 +51,11 @@ cba_gba = ultimo["CBA_GBA"]
 # 3. CANASTAS REGIONALES
 factores = {
     1: 1.00,
-    40: 0.804,
-    41: 0.828,
-    42: 0.945,
-    43: 0.984,
-    44: 1.151
+    40: 0.803,
+    41: 0.836,
+    42: 0.942,
+    43: 0.983,
+    44: 1.167
 }
 CBT = {r: round(cbt_gba * f, 2) for r, f in factores.items()}
 CBA = {r: round(cba_gba * f, 2) for r, f in factores.items()}
