@@ -1,4 +1,10 @@
-%%writefile app.py
+"""
+Estimador de Pobreza e Indigencia
+Autor: Hilario Ferrea
+Afiliación: Dirección Provincial de Estadística – Ministerio de Economía PBA
+Contacto: hferrea@estadistica.ec.gba.gov.ar | hiloferrea@gmail.com
+"""
+
 import streamlit as st
 import pandas as pd
 import requests
@@ -27,6 +33,13 @@ st.markdown("""
         color: #4B5563;
         margin-bottom: 25px;
     }
+    .card {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
     .footer {
         text-align: center;
         color: #64748B;
@@ -38,12 +51,14 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Diccionario para traducir meses abreviados a nombres completos en español
 nombres_meses = {
     1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio",
     7: "julio", 8: "agosto", 9: "septiembre", 10: "octubre",
     11: "noviembre", 12: "diciembre"
 }
 
+# 1. DESCARGA SERIE CANASTA DE INDEC
 @st.cache_data(ttl=86400)
 def cargar_datos_indec():
     url = "https://www.indec.gob.ar/ftp/cuadros/sociedad/serie_cba_cbt.xls"
@@ -72,6 +87,7 @@ periodo = f"{nombres_meses[periodo_dt.month]} de {periodo_dt.year}"
 cbt_gba = ultimo["CBT_GBA"]
 cba_gba = ultimo["CBA_GBA"]
 
+# 3. CANASTAS REGIONALES
 factores = {1: 1.00, 40: 0.803, 41: 0.836, 42: 0.942, 43: 0.983, 44: 1.167}
 CBT = {r: round(cbt_gba * f, 2) for r, f in factores.items()}
 CBA = {r: round(cba_gba * f, 2) for r, f in factores.items()}
@@ -81,6 +97,7 @@ etiquetas_region = {
     40: "Noroeste", 41: "Noreste", 42: "Cuyo", 43: "Pampeana", 44: "Patagónica"
 }
 
+# 4. FUNCIONES
 def calcular_adulto_equivalente(edad, sexo):
     if edad < 0:
         raise ValueError("La edad no puede ser negativa.")
@@ -133,9 +150,11 @@ def calcular_adulto_equivalente(edad, sexo):
     else:
         raise ValueError("Sexo no reconocido.")
 
-# SIDEBAR
+# ==================== INTERFAZ - SIDEBAR (Entradas) ====================
 with st.sidebar:
+    st.image("https://img.icons8.com/color/96/economy.png", width=64)
     st.header("Parámetros del Hogar")
+    
     percepcion = st.selectbox("¿Cómo creés que está tu hogar?", [
         "3 - No estoy seguro/a",
         "1 - Creo que estamos por debajo de la línea de pobreza",
@@ -144,6 +163,7 @@ with st.sidebar:
     
     st.markdown("---")
     st.subheader("👤 Composición del Hogar")
+    
     hogar = []
     sexo_opciones = {"Varón": "1", "Mujer": "2"}
     
@@ -156,7 +176,7 @@ with st.sidebar:
     
     for i in range(int(miembros_adicionales)):
         with st.expander(f"Persona adicional {i + 1}"):
-            edad_otro = st.number_input("Edad:", min_value=0, max_value=120, step=1, key=f"edad_{i}")
+            edad_otro = st.number_input(f"Edad:", min_value=0, max_value=120, step=1, key=f"edad_{i}")
             sexo_otro_label = st.selectbox("Sexo:", options=list(sexo_opciones.keys()), key=f"sexo_{i}")
             hogar.append(calcular_adulto_equivalente(edad_otro, sexo_opciones[sexo_otro_label]))
             
@@ -164,6 +184,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.subheader("📍 Ubicación e Ingresos")
+    
     provincias_a_region = {
         "CABA": 1, "Buenos Aires": None, "Catamarca": 40, "Jujuy": 40, "La Rioja": 40,
         "Salta": 40, "Santiago del Estero": 40, "Tucumán": 40, "Chaco": 41, "Corrientes": 41,
@@ -180,25 +201,31 @@ with st.sidebar:
         region = provincias_a_region[provincia]
         
     st.caption(f"Región asignada: **{etiquetas_region[region]}**")
+    
     ingreso_total = st.number_input("Ingreso total mensual del hogar ($):", min_value=0.0, step=1000.0, value=500000.0)
+    
     calcular_btn = st.button("Calcular Situación", type="primary", use_container_width=True)
 
-# PRINCIPAL
+# ==================== INTERFAZ - PRINCIPAL ====================
 st.markdown('<p class="main-header">Estimador de Pobreza e Indigencia</p>', unsafe_allow_html=True)
 st.markdown(f'<p class="sub-header">Herramienta exploratoria basada en los últimos datos oficiales del INDEC (<b>{periodo}</b>).</p>', unsafe_allow_html=True)
 
 if calcular_btn:
     lp = CBT[region] * uae_total
     li = CBA[region] * uae_total
+
     fragil_monto = lp * 1.25
     medio_monto = lp * 4
 
+    # Tarjetas de resumen métricas
     col1, col2, col3 = st.columns(3)
     col1.metric("Línea de Pobreza (CBT)", f"${lp:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
     col2.metric("Línea de Indigencia (CBA)", f"${li:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
     col3.metric("Ingreso Declarado", f"${ingreso_total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     st.markdown("---")
+
+    # Diagnóstico de situación
     st.subheader("📋 Diagnóstico del Hogar")
     if ingreso_total < li:
         resultado = "indigente"
@@ -209,6 +236,7 @@ if calcular_btn:
     else:
         resultado = "no pobre"
         st.success("✅ Tu hogar se encuentra por **encima de la línea de pobreza**.")
+        
         if ingreso_total <= fragil_monto:
             st.info("ℹ️ Situación **frágil**: apenas por encima de la línea de pobreza.")
         elif ingreso_total <= medio_monto:
@@ -216,31 +244,69 @@ if calcular_btn:
         else:
             st.info("ℹ️ Estrato de **ingresos acomodados**.")
 
+    # Gráfico interactivo con Plotly (reemplazando Matplotlib)
     st.subheader("📊 Análisis visual de brechas")
+    
     fig = go.Figure()
+
+    # Barras de composición
     alcance_indigencia = min(ingreso_total, li)
     alcance_pobreza = min(max(ingreso_total - li, 0), lp - li)
     tramo_faltante = max(lp - ingreso_total, 0)
 
-    fig.add_trace(go.Bar(y=['Hogar'], x=[alcance_indigencia], name='Ingreso Indigencia cubierto', orientation='h', marker_color='#E11D48'))
-    fig.add_trace(go.Bar(y=['Hogar'], x=[alcance_pobreza], name='Ingreso Pobreza cubierto', orientation='h', marker_color='#3B82F6'))
+    fig.add_trace(go.Bar(
+        y=['Hogar'], x=[alcance_indigencia], name='Ingreso Indigencia cubierto',
+        orientation='h', marker_color='#E11D48'
+    ))
+    fig.add_trace(go.Bar(
+        y=['Hogar'], x=[alcance_pobreza], name='Ingreso Pobreza cubierto',
+        orientation='h', marker_color='#3B82F6'
+    ))
     if tramo_faltante > 0:
-        fig.add_trace(go.Bar(y=['Hogar'], x=[tramo_faltante], name='Faltante para Pobreza', orientation='h', marker_color='#CBD5E1', marker_pattern_shape="x"))
+        fig.add_trace(go.Bar(
+            y=['Hogar'], x=[tramo_faltante], name='Faltante para Pobreza',
+            orientation='h', marker_color='#CBD5E1', marker_pattern_shape="x"
+        ))
 
+    # Líneas verticales de referencia
     fig.add_vline(x=li, line_dash="dot", line_color="black", annotation_text=f"Indigencia: ${li:,.0f}")
     fig.add_vline(x=lp, line_dash="dash", line_color="black", annotation_text=f"Pobreza: ${lp:,.0f}")
     fig.add_vline(x=ingreso_total, line_color="#2563EB", annotation_text=f"Ingreso: ${ingreso_total:,.0f}")
 
-    fig.update_layout(barmode='stack', title="Comparación del ingreso frente a las líneas de corte", xaxis_title="Pesos ($)", yaxis={'showticklabels': False}, height=300, margin=dict(l=20, r=20, t=40, b=20), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+    fig.update_layout(
+        barmode='stack',
+        title="Comparación del ingreso frente a las líneas de corte",
+        xaxis_title="Pesos ($)",
+        yaxis={'showticklabels': False},
+        height=300,
+        margin=dict(l=20, r=20, t=40, b=20),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+    )
     st.plotly_chart(fig, use_container_width=True)
+
+    # Percepción vs Realidad
+    st.subheader("💡 Percepción vs Estimación")
+    if ("1" in percepcion and resultado in ["pobre", "indigente"]) or ("2" in percepcion and resultado == "no pobre"):
+        st.info("Tu percepción coincide con la estimación técnica en función de los ingresos y composición declarados.")
+    else:
+        st.info("Existe una divergencia entre tu percepción inicial y el umbral estadístico calculado, lo cual es habitual debido a gastos específicos o composición familiar.")
+
 else:
     st.info("👈 Completá los datos del hogar en la barra lateral y hacé clic en **Calcular Situación** para ver los resultados.")
 
+# ==================== MATERIALES Y FOOTER ====================
 st.markdown("---")
+with st.expander("📚 Materiales metodológicos y de referencia"):
+    st.markdown("""
+    - [Metodología N°22 - INDEC](https://www.indec.gob.ar/ftp/cuadros/sociedad/EPH_metodologia_22_pobreza.pdf)
+    - [Informe de pobreza - DPE PBA](https://track-web-dpe.estadistica.ec.gba.gov.ar/uploads/Incidencia_de_la_Pobreza_y_la_Indigencia_Total_6_aglomerados_PBA_1er_Semestre_2026_6b1e2e8c3a.pdf)
+    - [Anexo metodológico de medición de pobreza](https://track-web-dpe.estadistica.ec.gba.gov.ar/uploads/Pobreza_Anexo_Metodologico_1_4637758cc1.pdf)
+    """)
+
 st.markdown(f"""
     <div class="footer">
         Herramienta desarrollada por <b>Hilario Ferrea</b><br>
         Contacto: hiloferrea@gmail.com — hferrea@estadistica.ec.gba.gov.ar<br>
-        <i>Nota: Desarrollo técnico de carácter exploratorio.</i>
+        <i>Nota: Desarrollo técnico de carácter exploratorio. No representa una publicación oficial del INDEC ni de la DPE.</i>
     </div>
 """, unsafe_allow_html=True)
