@@ -364,3 +364,4 @@ if st.button("Calcular situación del hogar"):
         </div>
         """,
         unsafe_allow_html=True
+    )
